@@ -1,0 +1,63 @@
+---
+title: Getting Started with Comet Storage powered by Wasabi
+sidebar_position: 4
+---
+
+Our bundled storage is the best way to get started with Comet Backup. You get all the power and value of Wasabi Hot Cloud Storage with a unified billing interface.
+
+## How pricing works
+
+With your trial account, you get 1TB of Comet Storage powered by Wasabi for free, valid for 30 days. When 1TB of trial storage is consumed, or the 30-day trial period has expired, whichever comes first, you must [set up Automatic Payment on your account](https://account.cometbackup.com/topup) to continue using Comet Storage.
+
+Storage cost is calculated and drawn from your account at least once per day. You will see usage charges for each Wasabi Bucket.
+
+Our algorithm for calculating your bucket utilization is identical to the Wasabi Pay-as-you-go pricing. Prices are based on a per-region basis. By default, your buckets will be in North America, although it is possible to create buckets in other regions.
+
+| Region                 | Storage                    |
+| ---------------------- | -------------------------- |
+| North America          | $5.99 TB/mo ($.0059 GB/mo) |
+| Europe (All locations) | $5.99 TB/mo ($.0059 GB/mo) |
+| APAC (All locations)\* | $6.99 TB/mo ($.0068 GB/mo) |
+
+_Note: we are currently not able to offer storage in the Japan region._
+
+For more detail on the way bucket usage is calculated, see the [Wasabi FAQ](https://wasabi.com/paygo-pricing-faq/).
+
+For customers using Storage, there is a minimum monthly charge associated with 1TB of active storage. If you store less than 1 TB of active storage you will be charged for it at the relevant regional cost.
+
+All data stored is subject to Wasabi's [terms and conditions](https://wasabi.com/legal/terms-of-use/).
+
+## How to use Comet Storage with a Self-Hosted server
+
+You are free to use your account access keys with a Self-Hosted server or a Comet-Hosted server which is not already pre-configured with a Comet Storage Storage Template. Comet Server supports the following ways to backup to Comet Storage.
+
+- [Storage Role](https://docs.cometbackup.com/latest/installation/comet-server-configuration/#storage-role)
+  - Use the "Wasabi" Storage Provider type.
+- [Request Storage Vault](https://docs.cometbackup.com/latest/installation/comet-server-configuration/#authentication-role-request-storage-vault)
+  - Use the "Wasabi Cloud Storage" type.
+
+To access your root account keys, go to [My Storage](https://account.cometbackup.com/my_storage) and select the ‘Show Access Keys’ button.
+
+Any bucket name can be chosen, as long as it is globally unique and adheres to Wasabi's [naming rules](https://wasabi.com/wp-content/themes/wasabi/docs/User_Guide/topics/Creating_a_Bucket.htm). If the bucket does not already exist, Comet will create it in a default region. If you want to use a bucket in a specific region, see the steps in "[How to create buckets in another region](https://docs.cometbackup.com/latest/guides/guide-comet-storage-getting-started#how-to-create-buckets-in-another-region)".
+
+## How to create buckets in another region
+
+You can use any S3-compatible API client (such as the [minio client](https://docs.min.io/minio/baremetal/reference/minio-mc.html)) to construct buckets in any supported Wasabi region. See the full list of [service endpoints](https://wasabi-support.zendesk.com/hc/en-us/articles/360015106031-What-are-the-service-URLs-for-Wasabi-s-different-storage-regions-) for Wasabi.
+
+For example, to create a new bucket in the eu-central-1 region:
+
+    mc alias set comet https://s3.eu-central-1.wasabisys.com <youraccesskey> <yoursecretkey>mc mb -region eu-central-1 comet/<yourbucketname>
+
+Copy
+
+Once you have created a new bucket in the desired region, you can modify your storage settings or create new Storage Templates or Storage Vaults which use the new bucket.
+
+To update an existing Storage Template, find it in Settings > Authentication (or in a tenant, Storage) > Storage Templates and modify the "Bucket Name" field to the newly created bucket. Updating a Storage Template will not update Storage Vaults which were created from it, so it will require the additional step of creating new Storage Vaults from the updated Storage Template or updating existing Storage Vaults to also use the newly created bucket.
+
+To create a new Storage Template, follow the instructions in "[How to use Comet Storage with a Self-Hosted server](https://docs.cometbackup.com/latest/guides/guide-comet-storage-getting-started#how-to-use-comet-storage-with-a-self-hosted-server)" and use the newly created bucket.
+
+If you have created new Storage Vaults which use the new bucket rather than updating existing Storage Vaults, any existing schedules using the previous Storage Vaults will also need to be updated.
+
+## How to close my Comet Storage account
+
+Your storage service can be ended by accessing the [My Storage page](https://account.cometbackup.com/my_storage) and clicking the Unsubscribe button.
